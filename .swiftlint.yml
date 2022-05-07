@@ -2,6 +2,7 @@ disabled_rules:
   - line_length
 
 identifier_name:
+  min_length: 1 # only min_length
 
 excluded:
   - WordGame/AppDelegate.swift

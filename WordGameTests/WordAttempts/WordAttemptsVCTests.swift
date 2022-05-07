@@ -23,6 +23,7 @@ class WordAttemptsVCTests: XCTestCase {
         self.sut = nil
     }
 
+    /// When the word and its translation are correct and user presses `Correct` CTA, correct count should be increased
     func testInputProcessing_whenCorrectCTAIsTappedWithMatchingWord_shouldUpdateLabelsCorrectly() throws {
         let spanishWords = Constants.getSpanishWords() ?? []
         self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 1.0)
@@ -34,6 +35,7 @@ class WordAttemptsVCTests: XCTestCase {
         XCTAssertEqual(self.sut.wrongAttemptsCountLabel.text!, "0")
     }
 
+    /// When translation of a word is wrong and user presses `Correct` CTA, wrong count should be increased
     func testInputProcessing_whenCorrectCTAIsTappedWithNonMatchingWord_shouldUpdateLabelsCorrectly() throws {
         let spanishWords = Constants.getSpanishWords() ?? []
         self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 0.0)
@@ -45,6 +47,7 @@ class WordAttemptsVCTests: XCTestCase {
         XCTAssertEqual(self.sut.wrongAttemptsCountLabel.text!, "1")
     }
 
+    /// When the word and its translation are correct and user presses `Wrong` CTA, wrong count should be increased
     func testInputProcessing_whenWrongCTAIsTappedWithMatchingWord_shouldUpdateLabelsCorrectly() throws {
         let spanishWords = Constants.getSpanishWords() ?? []
         self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 1.0)
@@ -56,6 +59,7 @@ class WordAttemptsVCTests: XCTestCase {
         XCTAssertEqual(self.sut.wrongAttemptsCountLabel.text!, "1")
     }
 
+    /// When translation of a word is wrong and user presses `Wrong` CTA, correct count should be increased
     func testInputProcessing_whenWrongCTAIsTappedWithNonMatchingWord_shouldUpdateLabelsCorrectly() throws {
         let spanishWords = Constants.getSpanishWords() ?? []
         self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 0.0)
