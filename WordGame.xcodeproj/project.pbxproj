@@ -9,13 +9,21 @@
 /* Begin PBXBuildFile section */
 		1A7F9619282651A100B57F0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F9618282651A100B57F0C /* AppDelegate.swift */; };
 		1A7F961B282651A100B57F0C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F961A282651A100B57F0C /* SceneDelegate.swift */; };
-		1A7F961D282651A100B57F0C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F961C282651A100B57F0C /* ViewController.swift */; };
+		1A7F961D282651A100B57F0C /* WordAttemptsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F961C282651A100B57F0C /* WordAttemptsVC.swift */; };
 		1A7F9620282651A100B57F0C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A7F961E282651A100B57F0C /* Main.storyboard */; };
 		1A7F9622282651A300B57F0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A7F9621282651A300B57F0C /* Assets.xcassets */; };
 		1A7F9625282651A300B57F0C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A7F9623282651A300B57F0C /* LaunchScreen.storyboard */; };
 		1A7F9630282651A300B57F0C /* WordGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F962F282651A300B57F0C /* WordGameTests.swift */; };
 		1A7F963A282651A300B57F0C /* WordGameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F9639282651A300B57F0C /* WordGameUITests.swift */; };
 		1A7F963C282651A300B57F0C /* WordGameUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F963B282651A300B57F0C /* WordGameUITestsLaunchTests.swift */; };
+		1A7F964F28265ABC00B57F0C /* SpanishWords.json in Resources */ = {isa = PBXBuildFile; fileRef = 1A7F964E28265ABC00B57F0C /* SpanishWords.json */; };
+		1A7F965228265B8300B57F0C /* WordAttemptsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F965128265B8300B57F0C /* WordAttemptsVM.swift */; };
+		1A7F965428265D1300B57F0C /* WordsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F965328265D1300B57F0C /* WordsList.swift */; };
+		1A7F965628265DE100B57F0C /* SpanishWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F965528265DE100B57F0C /* SpanishWord.swift */; };
+		1A7F965A2826804200B57F0C /* WordAttemptsVMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F96592826804200B57F0C /* WordAttemptsVMTests.swift */; };
+		1A7F965C2826A75F00B57F0C /* WordPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F965B2826A75F00B57F0C /* WordPair.swift */; };
+		1A7F965E2826AC2800B57F0C /* WordAttemptsVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F965D2826AC2800B57F0C /* WordAttemptsVCTests.swift */; };
+		1A7F96612826FBC600B57F0C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F96602826FBC600B57F0C /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +47,7 @@
 		1A7F9615282651A100B57F0C /* WordGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A7F9618282651A100B57F0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1A7F961A282651A100B57F0C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		1A7F961C282651A100B57F0C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1A7F961C282651A100B57F0C /* WordAttemptsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordAttemptsVC.swift; sourceTree = "<group>"; };
 		1A7F961F282651A100B57F0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1A7F9621282651A300B57F0C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1A7F9624282651A300B57F0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +57,14 @@
 		1A7F9635282651A300B57F0C /* WordGameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WordGameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A7F9639282651A300B57F0C /* WordGameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordGameUITests.swift; sourceTree = "<group>"; };
 		1A7F963B282651A300B57F0C /* WordGameUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordGameUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		1A7F964E28265ABC00B57F0C /* SpanishWords.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SpanishWords.json; sourceTree = "<group>"; };
+		1A7F965128265B8300B57F0C /* WordAttemptsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordAttemptsVM.swift; sourceTree = "<group>"; };
+		1A7F965328265D1300B57F0C /* WordsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsList.swift; sourceTree = "<group>"; };
+		1A7F965528265DE100B57F0C /* SpanishWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanishWord.swift; sourceTree = "<group>"; };
+		1A7F96592826804200B57F0C /* WordAttemptsVMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordAttemptsVMTests.swift; sourceTree = "<group>"; };
+		1A7F965B2826A75F00B57F0C /* WordPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPair.swift; sourceTree = "<group>"; };
+		1A7F965D2826AC2800B57F0C /* WordAttemptsVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordAttemptsVCTests.swift; sourceTree = "<group>"; };
+		1A7F96602826FBC600B57F0C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +115,15 @@
 		1A7F9617282651A100B57F0C /* WordGame */ = {
 			isa = PBXGroup;
 			children = (
+				1A7F965F2826FBAB00B57F0C /* Utils */,
+				1A7F964D28265A6B00B57F0C /* Data */,
+				1A7F964C28265A2800B57F0C /* Models */,
+				1A7F964B28265A2000B57F0C /* ViewModels */,
+				1A7F964A28265A1600B57F0C /* Extensions */,
+				1A7F964928265A0600B57F0C /* ViewControllers */,
+				1A7F9648282659FB00B57F0C /* Storyboards */,
 				1A7F9618282651A100B57F0C /* AppDelegate.swift */,
 				1A7F961A282651A100B57F0C /* SceneDelegate.swift */,
-				1A7F961C282651A100B57F0C /* ViewController.swift */,
-				1A7F961E282651A100B57F0C /* Main.storyboard */,
 				1A7F9621282651A300B57F0C /* Assets.xcassets */,
 				1A7F9623282651A300B57F0C /* LaunchScreen.storyboard */,
 				1A7F9626282651A300B57F0C /* Info.plist */,
@@ -113,6 +134,7 @@
 		1A7F962E282651A300B57F0C /* WordGameTests */ = {
 			isa = PBXGroup;
 			children = (
+				1A7F96582826802200B57F0C /* WordAttempts */,
 				1A7F962F282651A300B57F0C /* WordGameTests.swift */,
 			);
 			path = WordGameTests;
@@ -127,6 +149,72 @@
 			path = WordGameUITests;
 			sourceTree = "<group>";
 		};
+		1A7F9648282659FB00B57F0C /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				1A7F961E282651A100B57F0C /* Main.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		1A7F964928265A0600B57F0C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				1A7F961C282651A100B57F0C /* WordAttemptsVC.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		1A7F964A28265A1600B57F0C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1A7F964B28265A2000B57F0C /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				1A7F965128265B8300B57F0C /* WordAttemptsVM.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		1A7F964C28265A2800B57F0C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1A7F965328265D1300B57F0C /* WordsList.swift */,
+				1A7F965528265DE100B57F0C /* SpanishWord.swift */,
+				1A7F965B2826A75F00B57F0C /* WordPair.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1A7F964D28265A6B00B57F0C /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				1A7F964E28265ABC00B57F0C /* SpanishWords.json */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		1A7F96582826802200B57F0C /* WordAttempts */ = {
+			isa = PBXGroup;
+			children = (
+				1A7F96592826804200B57F0C /* WordAttemptsVMTests.swift */,
+				1A7F965D2826AC2800B57F0C /* WordAttemptsVCTests.swift */,
+			);
+			path = WordAttempts;
+			sourceTree = "<group>";
+		};
+		1A7F965F2826FBAB00B57F0C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1A7F96602826FBC600B57F0C /* Constants.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -134,6 +222,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1A7F963F282651A300B57F0C /* Build configuration list for PBXNativeTarget "WordGame" */;
 			buildPhases = (
+				1A7F9662282702C200B57F0C /* ShellScript */,
 				1A7F9611282651A100B57F0C /* Sources */,
 				1A7F9612282651A100B57F0C /* Frameworks */,
 				1A7F9613282651A100B57F0C /* Resources */,
@@ -233,6 +322,7 @@
 			files = (
 				1A7F9625282651A300B57F0C /* LaunchScreen.storyboard in Resources */,
 				1A7F9622282651A300B57F0C /* Assets.xcassets in Resources */,
+				1A7F964F28265ABC00B57F0C /* SpanishWords.json in Resources */,
 				1A7F9620282651A100B57F0C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -253,14 +343,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1A7F9662282702C200B57F0C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint autocorrect && swiftlint # when we want to autocorrect as well.\n  #swiftlint # when we do not want autocorrect\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1A7F9611282651A100B57F0C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A7F961D282651A100B57F0C /* ViewController.swift in Sources */,
+				1A7F965228265B8300B57F0C /* WordAttemptsVM.swift in Sources */,
+				1A7F961D282651A100B57F0C /* WordAttemptsVC.swift in Sources */,
 				1A7F9619282651A100B57F0C /* AppDelegate.swift in Sources */,
 				1A7F961B282651A100B57F0C /* SceneDelegate.swift in Sources */,
+				1A7F965428265D1300B57F0C /* WordsList.swift in Sources */,
+				1A7F965628265DE100B57F0C /* SpanishWord.swift in Sources */,
+				1A7F965C2826A75F00B57F0C /* WordPair.swift in Sources */,
+				1A7F96612826FBC600B57F0C /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +383,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A7F965A2826804200B57F0C /* WordAttemptsVMTests.swift in Sources */,
+				1A7F965E2826AC2800B57F0C /* WordAttemptsVCTests.swift in Sources */,
 				1A7F9630282651A300B57F0C /* WordGameTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,7 +572,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -482,7 +599,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
