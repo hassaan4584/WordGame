@@ -42,7 +42,7 @@ class WordAttemptsVC: UIViewController {
 
     /// Initialize view model object
     func setupViewModel() {
-        let spanishWordsList: [SpanishWord] = Constants.getSpanishWords() ?? []
+        let spanishWordsList: [Word] = Constants.getSpanishWords() ?? []
         self.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWordsList, correctAnswerProbability: 0.25)
     }
 

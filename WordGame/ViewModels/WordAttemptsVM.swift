@@ -17,7 +17,8 @@ final class WordAttemptsVM {
         case wrong
     }
 
-    private let spanishWordsList: [SpanishWord]
+    /// This contains the list of words, these words could be either Spanish or German or some other
+    private let wordsList: [Word]
     /// The probability that a given word and its translation are correct
     private let correctAnswerProbability: Double
     /// Index of the word that will be used in the next iteration
@@ -29,15 +30,15 @@ final class WordAttemptsVM {
     /// `WordPair` that is currently shown to user
     var currentWord: WordPair?
 
-    init(spanishWordsList: [SpanishWord], correctAnswerProbability: Double=0.25) {
-        self.spanishWordsList = spanishWordsList
+    init(spanishWordsList: [Word], correctAnswerProbability: Double=0.25) {
+        self.wordsList = spanishWordsList
         self.correctAnswerProbability = correctAnswerProbability
     }
 
     /// This function returns true with the given probability
     /// - Parameter probability: The probability of returning true
     /// - Returns: returns true with the given probability
-    func shouldUseCorrect(probability: Double) -> Bool {
+    func shouldUseCorrectOption(probability: Double) -> Bool {
         let intProbablity: Int = Int(probability * 100)
         let rand = Int.random(in: 1...100)
         return rand <= intProbablity
@@ -48,31 +49,34 @@ final class WordAttemptsVM {
     ///   - spanishWord: The `spanishWord.textEng` is the english word for which its correct or wrong translation is to be shown
     ///   - wordsList: The list of words from which some incorrect word will be used
     /// - Returns: if no error happens, it will return `WordPair` object
-    func generateRandomWordPair(spanishWord: SpanishWord, wordsList: SpanishWordsList) -> WordPair? {
-        guard let englishWord = spanishWord.textEng, let spanishWord = spanishWord.textSpa else {
+    func generateRandomWordPair(word: Word, wordsList: WordsList) -> WordPair? {
+        guard let englishWord = word.englishWord, let spanishWord = word.translatedWord else {
             return nil
         }
-        guard !shouldUseCorrect(probability: self.correctAnswerProbability) else {
+        guard !shouldUseCorrectOption(probability: self.correctAnswerProbability) else {
             return WordPair(englishWord: englishWord, translatedWord: spanishWord, isTranslationCorrect: true)
         }
-        guard let wordIndex = (wordsList.firstIndex { $0.textEng == englishWord && $0.textSpa == spanishWord }) else { return nil }
+        guard wordsList.count > 2 else {
+            return WordPair(englishWord: englishWord, translatedWord: spanishWord, isTranslationCorrect: true)
+        }
+        guard let wordIndex = (wordsList.firstIndex { $0.englishWord == englishWord && $0.translatedWord == spanishWord }) else { return nil }
 
         let nextIndex: Int = (wordIndex + 2) % wordsList.count
-        guard let randomSpanishWord = wordsList[nextIndex].textSpa else { return nil }
+        guard let randomTranslation = wordsList[nextIndex].translatedWord else { return nil }
 
         // When there is only one word in the array, it will always return correct answer
-        return WordPair(englishWord: englishWord, translatedWord: randomSpanishWord, isTranslationCorrect: false)
+        return WordPair(englishWord: englishWord, translatedWord: randomTranslation, isTranslationCorrect: false)
     }
 
     /// This function will create a new `WordPair` based on the given requirements. This will be used to display to user
     /// - Returns: a new `WordPair` object
     func getNextRandomWord() -> WordPair? {
-        guard self.nextWordIndex < self.spanishWordsList.count else { return nil }
-        guard self.spanishWordsList.count > 0 else { return nil }
+        guard self.nextWordIndex < self.wordsList.count else { return nil }
+        guard self.wordsList.count > 0 else { return nil }
 
-        let spanishWord = self.spanishWordsList[self.nextWordIndex]
-        self.nextWordIndex = (self.nextWordIndex + 1) % self.spanishWordsList.count
-        self.currentWord = self.generateRandomWordPair(spanishWord: spanishWord, wordsList: self.spanishWordsList)
+        let spanishWord = self.wordsList[self.nextWordIndex]
+        self.nextWordIndex = (self.nextWordIndex + 1) % self.wordsList.count
+        self.currentWord = self.generateRandomWordPair(word: spanishWord, wordsList: self.wordsList)
         return self.currentWord
     }
 

@@ -7,14 +7,21 @@
 
 import Foundation
 
-struct SpanishWord: Decodable {
+struct SpanishWord: Decodable, Word {
     /// English representation of the word
-    let textEng: String?
+    private let textEng: String?
     /// Spanish represenation of the word
-    let textSpa: String?
+    private let textSpa: String?
 
     enum CodingKeys: String, CodingKey {
         case textEng = "text_eng"
         case textSpa = "text_spa"
+    }
+
+    var englishWord: String? {
+        return self.textEng
+    }
+    var translatedWord: String? {
+        return self.textSpa
     }
 }

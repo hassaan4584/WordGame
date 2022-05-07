@@ -18,7 +18,7 @@
 		1A7F963C282651A300B57F0C /* WordGameUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F963B282651A300B57F0C /* WordGameUITestsLaunchTests.swift */; };
 		1A7F964F28265ABC00B57F0C /* SpanishWords.json in Resources */ = {isa = PBXBuildFile; fileRef = 1A7F964E28265ABC00B57F0C /* SpanishWords.json */; };
 		1A7F965228265B8300B57F0C /* WordAttemptsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F965128265B8300B57F0C /* WordAttemptsVM.swift */; };
-		1A7F965428265D1300B57F0C /* WordsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F965328265D1300B57F0C /* WordsList.swift */; };
+		1A7F965428265D1300B57F0C /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F965328265D1300B57F0C /* Word.swift */; };
 		1A7F965628265DE100B57F0C /* SpanishWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F965528265DE100B57F0C /* SpanishWord.swift */; };
 		1A7F965A2826804200B57F0C /* WordAttemptsVMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F96592826804200B57F0C /* WordAttemptsVMTests.swift */; };
 		1A7F965C2826A75F00B57F0C /* WordPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F965B2826A75F00B57F0C /* WordPair.swift */; };
@@ -59,7 +59,7 @@
 		1A7F963B282651A300B57F0C /* WordGameUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordGameUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		1A7F964E28265ABC00B57F0C /* SpanishWords.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SpanishWords.json; sourceTree = "<group>"; };
 		1A7F965128265B8300B57F0C /* WordAttemptsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordAttemptsVM.swift; sourceTree = "<group>"; };
-		1A7F965328265D1300B57F0C /* WordsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsList.swift; sourceTree = "<group>"; };
+		1A7F965328265D1300B57F0C /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		1A7F965528265DE100B57F0C /* SpanishWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanishWord.swift; sourceTree = "<group>"; };
 		1A7F96592826804200B57F0C /* WordAttemptsVMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordAttemptsVMTests.swift; sourceTree = "<group>"; };
 		1A7F965B2826A75F00B57F0C /* WordPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPair.swift; sourceTree = "<group>"; };
@@ -183,7 +183,7 @@
 		1A7F964C28265A2800B57F0C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				1A7F965328265D1300B57F0C /* WordsList.swift */,
+				1A7F965328265D1300B57F0C /* Word.swift */,
 				1A7F965528265DE100B57F0C /* SpanishWord.swift */,
 				1A7F965B2826A75F00B57F0C /* WordPair.swift */,
 			);
@@ -372,7 +372,7 @@
 				1A7F961D282651A100B57F0C /* WordAttemptsVC.swift in Sources */,
 				1A7F9619282651A100B57F0C /* AppDelegate.swift in Sources */,
 				1A7F961B282651A100B57F0C /* SceneDelegate.swift in Sources */,
-				1A7F965428265D1300B57F0C /* WordsList.swift in Sources */,
+				1A7F965428265D1300B57F0C /* Word.swift in Sources */,
 				1A7F965628265DE100B57F0C /* SpanishWord.swift in Sources */,
 				1A7F965C2826A75F00B57F0C /* WordPair.swift in Sources */,
 				1A7F96612826FBC600B57F0C /* Constants.swift in Sources */,
