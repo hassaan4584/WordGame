@@ -16,6 +16,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EnglishWord" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLd-gp-N50">
+                                <rect key="frame" x="138" y="483" width="138.5" height="30"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cpm-tx-QoJ" userLabel="Spanish Word">
+                                <rect key="frame" x="170" y="380" width="74.5" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d5I-bL-t82" userLabel="Attempts View">
                                 <rect key="frame" x="222" y="54" width="172" height="57"/>
                                 <subviews>
@@ -71,18 +84,6 @@
                                     <constraint firstItem="oqT-jH-ha4" firstAttribute="top" secondItem="i7P-Wr-Utu" secondAttribute="bottom" constant="10" id="up6-Bg-aiu"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cpm-tx-QoJ" userLabel="Spanish Word">
-                                <rect key="frame" x="170" y="380" width="74.5" height="36"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EnglishWord" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLd-gp-N50">
-                                <rect key="frame" x="138" y="483" width="138.5" height="30"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bi0-KJ-Bag" userLabel="BottomButtonsView">
                                 <rect key="frame" x="0.0" y="782" width="414" height="80"/>
                                 <subviews>
@@ -140,15 +141,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="cpm-tx-QoJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="4Rm-U0-Muv"/>
                             <constraint firstItem="YLd-gp-N50" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="C8l-V2-cGX"/>
-                            <constraint firstItem="cpm-tx-QoJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ev6-UF-sVh"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Bi0-KJ-Bag" secondAttribute="trailing" id="FUS-sj-3qD"/>
                             <constraint firstItem="YLd-gp-N50" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="50" id="JYh-IV-1Uf"/>
-                            <constraint firstItem="cpm-tx-QoJ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-50" id="UC4-67-PWt"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="d5I-bL-t82" secondAttribute="trailing" constant="20" id="UFz-gy-osL"/>
                             <constraint firstItem="Bi0-KJ-Bag" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="UIH-cp-zBM"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cpm-tx-QoJ" secondAttribute="trailing" constant="20" id="bRd-Pq-ic6"/>
                             <constraint firstItem="d5I-bL-t82" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="cZ9-Y0-m0N"/>
                             <constraint firstItem="Bi0-KJ-Bag" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="rYC-7L-Drj"/>
                         </constraints>
