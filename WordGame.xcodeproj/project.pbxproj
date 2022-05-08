@@ -24,6 +24,7 @@
 		1A7F965C2826A75F00B57F0C /* WordPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F965B2826A75F00B57F0C /* WordPair.swift */; };
 		1A7F965E2826AC2800B57F0C /* WordAttemptsVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F965D2826AC2800B57F0C /* WordAttemptsVCTests.swift */; };
 		1A7F96612826FBC600B57F0C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F96602826FBC600B57F0C /* Constants.swift */; };
+		1A7F96662828023900B57F0C /* XCTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7F96652828023900B57F0C /* XCTestCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		1A7F965B2826A75F00B57F0C /* WordPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPair.swift; sourceTree = "<group>"; };
 		1A7F965D2826AC2800B57F0C /* WordAttemptsVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordAttemptsVCTests.swift; sourceTree = "<group>"; };
 		1A7F96602826FBC600B57F0C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		1A7F96652828023900B57F0C /* XCTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 			children = (
 				1A7F96582826802200B57F0C /* WordAttempts */,
 				1A7F962F282651A300B57F0C /* WordGameTests.swift */,
+				1A7F96652828023900B57F0C /* XCTestCase.swift */,
 			);
 			path = WordGameTests;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A7F965A2826804200B57F0C /* WordAttemptsVMTests.swift in Sources */,
+				1A7F96662828023900B57F0C /* XCTestCase.swift in Sources */,
 				1A7F965E2826AC2800B57F0C /* WordAttemptsVCTests.swift in Sources */,
 				1A7F9630282651A300B57F0C /* WordGameTests.swift in Sources */,
 			);
