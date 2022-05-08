@@ -22,7 +22,8 @@ class WordAttemptsVC: UIViewController {
     /// The timer object to keep track of the time duration for each attempt
     var attemptsTimer: Timer?
     /// Time duration in seconds allowed to make an attempt
-    private var timerDuration: Double { 5.0 }
+    var timerDuration: Double { 5.0 }
+
     // MARK: Initializations
 
     override func viewDidLoad() {
@@ -30,7 +31,7 @@ class WordAttemptsVC: UIViewController {
 
         self.setupViewModel()
         self.setupViews()
-        self.showNextWord()
+        self.showNextWordWithAnimation()
         self.restartTimer()
     }
 
@@ -42,6 +43,10 @@ class WordAttemptsVC: UIViewController {
         self.wrongButton.layer.borderWidth = 3.0
         self.correctButton.layer.cornerRadius = 2.0
         self.correctButton.layer.borderWidth = 3.0
+
+        self.spanishWordLabel.frame = .init(x: 0, y: 0, width: self.view.frame.width, height: 100)
+        self.spanishWordLabel.center = .init(x: self.view.center.x, y: 50)
+        spanishWordLabel.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.5)
     }
 
     /// Initialize view model object
@@ -62,8 +67,15 @@ class WordAttemptsVC: UIViewController {
     }
 
     /// Fetches the next word and displays it on the screen
-    func showNextWord() {
+    func showNextWordWithAnimation() {
         guard let word = self.wordAttemptsVM.getNextRandomWord() else { return }
+        self.spanishWordLabel.layer.removeAllAnimations()
+        // Starting at the top
+        self.spanishWordLabel.center = .init(x: self.view.center.x, y: 50)
+        // Animating to the bottom
+        UIView.animate(withDuration: self.timerDuration, delay: 0, options: .curveLinear) {
+            self.spanishWordLabel.center = .init(x: self.view.center.x, y: self.view.frame.height-150)
+        }
 
         self.spanishWordLabel.text = word.translatedWord
         self.englishWordLabel.text = word.englishWord
@@ -72,7 +84,11 @@ class WordAttemptsVC: UIViewController {
     // MARK: Timer
     @objc func timerDidEnd() {
         self.wordAttemptsVM.processTimerExpiryAttempt()
-        self.showNextWord()
+        if self.wordAttemptsVM.verifyGameEndingConditions() {
+            self.attemptsTimer?.invalidate()
+        } else {
+            self.showNextWordWithAnimation()
+        }
     }
 
     /// When the timer had to end prematurely and we need to restart the timer
@@ -85,30 +101,51 @@ class WordAttemptsVC: UIViewController {
 
     @IBAction func correctButtonPressed(_ sender: UIButton) {
         guard let currentWord = self.wordAttemptsVM.currentWord else {
-            self.showNextWord()
+            self.showNextWordWithAnimation()
             return
         }
         self.wordAttemptsVM.processUserAttempt(userAttempt: .correct, givenWord: currentWord)
-        self.wordAttemptsVM.verifyGameEndingConditions()
-        self.showNextWord()
-        self.restartTimer()
+        if self.wordAttemptsVM.verifyGameEndingConditions() {
+            self.attemptsTimer?.invalidate()
+        } else {
+            self.showNextWordWithAnimation()
+            self.restartTimer()
+        }
     }
 
     @IBAction func wrongButtonPressed(_ sender: UIButton) {
         guard let currentWord = self.wordAttemptsVM.currentWord else {
-            self.showNextWord()
+            self.showNextWordWithAnimation()
             return
         }
         self.wordAttemptsVM.processUserAttempt(userAttempt: .wrong, givenWord: currentWord)
-        self.wordAttemptsVM.verifyGameEndingConditions()
-        self.showNextWord()
-        self.restartTimer()
+        if self.wordAttemptsVM.verifyGameEndingConditions() {
+            self.attemptsTimer?.invalidate()
+        } else {
+            self.showNextWordWithAnimation()
+            self.restartTimer()
+        }
     }
 
     // MARK: Game Logic
     /// This is used to quit the app once the game has ended.
     func endGame(quitReason: WordAttemptsVM.EndGameReason) {
-        let exitCode: Int32 = Int32(quitReason.rawValue)
-        exit(exitCode)
+        self.showAlertForRestart()
+    }
+
+    // MARK: Navigations
+    func showAlertForRestart() {
+        let alert = UIAlertController(title: "Game End", message: "Do you want to restart ?", preferredStyle: .alert)
+        let restartAction = UIAlertAction(title: "Restart", style: .default) { [weak self] _ in
+            self?.wordAttemptsVM.updateDataForGameRestart()
+            self?.showNextWordWithAnimation()
+            self?.restartTimer()
+        }
+        let quitAction = UIAlertAction(title: "Quit", style: .destructive) { _ in
+            exit(1)
+        }
+        alert.addAction(restartAction)
+        alert.addAction(quitAction)
+        self.present(alert, animated: true, completion: nil)
     }
 }

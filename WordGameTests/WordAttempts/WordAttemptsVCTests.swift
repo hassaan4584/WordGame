@@ -119,7 +119,7 @@ class WordAttemptsVCTests: XCTestCase {
         self.sut.restartTimer()
 
         // Assert
-        wait(for: [exp], timeout: 6)
+        wait(for: [exp], timeout: self.sut.timerDuration+1.0)
     }
 
 }

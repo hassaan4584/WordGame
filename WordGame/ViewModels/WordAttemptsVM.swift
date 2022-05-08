@@ -35,12 +35,12 @@ final class WordAttemptsVM {
     private var correctAttemptsCount: Int = 0
     /// Total worng attempts user has made so far
     private var wrongAttemptsCount: Int = 0
-    /// `WordPair` that is currently shown to user
-    var currentWord: WordPair?
     /// Maximum attempts allowed to the user OR the maximum number of words shown to the user
     private let totalAllowedWordAttempts: Int
     /// Maximum wrong attempts allowed
     private let allowedWrongAttempts: Int
+    /// `WordPair` that is currently shown to user
+    var currentWord: WordPair?
 
     /// This will get called when the game has to end
     var endGame: ((EndGameReason) -> Void)?
@@ -119,7 +119,6 @@ final class WordAttemptsVM {
                 self.correctAttemptsCount += 1
             }
         }
-        self.verifyGameEndingConditions()
         self.onAttemptMade?(self.correctAttemptsCount, self.wrongAttemptsCount)
     }
 
@@ -127,16 +126,24 @@ final class WordAttemptsVM {
     /// - Returns: A tuple with updated `correct` and `wrong` attempt counts
     func processTimerExpiryAttempt() {
         self.wrongAttemptsCount += 1
-        self.verifyGameEndingConditions()
         self.onAttemptMade?(self.correctAttemptsCount, self.wrongAttemptsCount)
     }
-
+    /// Re-set the data for game restart
+    func updateDataForGameRestart() {
+        self.correctAttemptsCount = 0
+        self.wrongAttemptsCount = 0
+        self.onAttemptMade?(self.correctAttemptsCount, self.wrongAttemptsCount)
+    }
     /// When game ending conditions are met, this will inform its VC to take respective
-    func verifyGameEndingConditions() {
-        if self.nextWordIndex == self.totalAllowedWordAttempts {
+    /// - Returns: Boolean depending on if the endGame action has to be taken or not
+    func verifyGameEndingConditions() -> Bool {
+        if (correctAttemptsCount + wrongAttemptsCount) == self.totalAllowedWordAttempts {
             self.endGame?(.totalWords)
+            return true
         } else if self.wrongAttemptsCount == self.allowedWrongAttempts {
             self.endGame?(.wrongAttempts)
+            return true
         }
+        return false
     }
 }

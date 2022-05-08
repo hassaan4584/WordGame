@@ -317,6 +317,7 @@ class WordAttemptsVMTests: XCTestCase {
         let wordPair3 = self.sut.getNextRandomWord()
         self.sut.processUserAttempt(userAttempt: .correct, givenWord: wordPair3!)
 
+        _ = self.sut.verifyGameEndingConditions()
         // Assert
         func endGame(quitReason: WordAttemptsVM.EndGameReason) {
             quitExpectaion.fulfill()
@@ -338,6 +339,7 @@ class WordAttemptsVMTests: XCTestCase {
         for _ in 0..<totalAllowedAttempts {
             let wordPair1 = self.sut.getNextRandomWord()
             self.sut.processUserAttempt(userAttempt: .wrong, givenWord: wordPair1!)
+            _ = self.sut.verifyGameEndingConditions()
         }
 
         // Assert
@@ -360,6 +362,7 @@ class WordAttemptsVMTests: XCTestCase {
         for _ in 0..<totalAllowedAttempts-1 {
             let wordPair1 = self.sut.getNextRandomWord()
             self.sut.processUserAttempt(userAttempt: .wrong, givenWord: wordPair1!)
+            _ = self.sut.verifyGameEndingConditions()
         }
         // Assert
         func endGame(quitReason: WordAttemptsVM.EndGameReason) {
