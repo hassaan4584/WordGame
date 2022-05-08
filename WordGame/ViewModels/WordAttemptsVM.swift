@@ -38,18 +38,20 @@ final class WordAttemptsVM {
     /// `WordPair` that is currently shown to user
     var currentWord: WordPair?
     /// Maximum attempts allowed to the user OR the maximum number of words shown to the user
-    private var totalAllowedWordAttempts: Int { 15 }
+    private let totalAllowedWordAttempts: Int
     /// Maximum wrong attempts allowed
-    private var allowedWrongAttempts: Int { 3 }
+    private let allowedWrongAttempts: Int
 
     /// This will get called when the game has to end
     var endGame: ((EndGameReason) -> Void)?
     /// This will be used to update UI with `correct` and `wrong` attempt counts
     var onAttemptMade: ((_ correctCount: Int, _ wrongCount: Int) -> Void)?
 
-    init(spanishWordsList: [Word], correctAnswerProbability: Double=0.25) {
+    init(spanishWordsList: [Word], correctAnswerProbability: Double=0.25, totalAllowedWordAttempts: Int=15, allowedWrongAttempts: Int=3) {
         self.wordsList = spanishWordsList
         self.correctAnswerProbability = correctAnswerProbability
+        self.totalAllowedWordAttempts = totalAllowedWordAttempts
+        self.allowedWrongAttempts = allowedWrongAttempts
     }
 
     /// This function returns true with the given probability
