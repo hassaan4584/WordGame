@@ -211,14 +211,19 @@ class WordAttemptsVMTests: XCTestCase {
 
         let correctProbability = 1.0
         self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
+        var correct = 0, wrong = 0
+        self.sut.onAttemptMade = { (correctCount, wrongCount) in
+            correct = correctCount
+            wrong = wrongCount
+        }
 
         // Act
         let wordPair = self.sut.getNextRandomWord()
-        let attempts = self.sut.processUserAttempt(userAttempt: .correct, givenWord: wordPair!)
+        self.sut.processUserAttempt(userAttempt: .correct, givenWord: wordPair!)
 
         // Assert
-        XCTAssertEqual(attempts.correctCount, 1)
-        XCTAssertEqual(attempts.wrongCount, 0)
+        XCTAssertEqual(correct, 1)
+        XCTAssertEqual(wrong, 0)
     }
 
     /// When the pair is matching AND user presses the `Wrong` CTA. The attempt will be considered as wrong
@@ -231,14 +236,18 @@ class WordAttemptsVMTests: XCTestCase {
 
         let correctProbability = 1.0
         self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
-
+        var correct = 0, wrong = 0
+        self.sut.onAttemptMade = { (correctCount, wrongCount) in
+            correct = correctCount
+            wrong = wrongCount
+        }
         // Act
         let wordPair = self.sut.getNextRandomWord()
-        let attempts = self.sut.processUserAttempt(userAttempt: .wrong, givenWord: wordPair!)
+        self.sut.processUserAttempt(userAttempt: .wrong, givenWord: wordPair!)
 
         // Assert
-        XCTAssertEqual(attempts.correctCount, 0)
-        XCTAssertEqual(attempts.wrongCount, 1)
+        XCTAssertEqual(correct, 0)
+        XCTAssertEqual(wrong, 1)
     }
 
     /// When the pair is not matching AND user presses the `Correct` CTA. The attempt will be considered as wrong
@@ -251,14 +260,19 @@ class WordAttemptsVMTests: XCTestCase {
 
         let correctProbability = 0.0
         self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
+        var correct = 0, wrong = 0
+        self.sut.onAttemptMade = { (correctCount, wrongCount) in
+            correct = correctCount
+            wrong = wrongCount
+        }
 
         // Act
         let wordPair = self.sut.getNextRandomWord()
-        let attempts = self.sut.processUserAttempt(userAttempt: .correct, givenWord: wordPair!)
+        self.sut.processUserAttempt(userAttempt: .correct, givenWord: wordPair!)
 
         // Assert
-        XCTAssertEqual(attempts.correctCount, 0)
-        XCTAssertEqual(attempts.wrongCount, 1)
+        XCTAssertEqual(correct, 0)
+        XCTAssertEqual(wrong, 1)
     }
 
     /// When the pair is not matching AND user presses the `wrong` CTA. The attempt will be considered as correct
@@ -271,13 +285,85 @@ class WordAttemptsVMTests: XCTestCase {
 
         let correctProbability = 0.0
         self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
+        var correct = 0, wrong = 0
+        self.sut.onAttemptMade = { (correctCount, wrongCount) in
+            correct = correctCount
+            wrong = wrongCount
+        }
 
         // Act
         let wordPair = self.sut.getNextRandomWord()
-        let attempts = self.sut.processUserAttempt(userAttempt: .wrong, givenWord: wordPair!)
+        self.sut.processUserAttempt(userAttempt: .wrong, givenWord: wordPair!)
 
         // Assert
-        XCTAssertEqual(attempts.correctCount, 1)
-        XCTAssertEqual(attempts.wrongCount, 0)
+        XCTAssertEqual(correct, 1)
+        XCTAssertEqual(wrong, 0)
+    }
+
+    /// When user performs 3 wrong attempts, the endGame closure should be called
+    func testEndingConditions_whenUserMakes3WrongAttempts_endGameClosureShouldBeCalled() throws {
+        // Arrange
+        let wordList = Constants.getSpanishWords() ?? []
+        let correctProbability = 0.0
+        self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability, allowedWrongAttempts: 3)
+        let quitExpectaion = expectation(description: "End game expectation")
+        self.sut.endGame = endGame(quitReason: )
+
+        // Act
+        let wordPair1 = self.sut.getNextRandomWord()
+        self.sut.processUserAttempt(userAttempt: .correct, givenWord: wordPair1!)
+        let wordPair2 = self.sut.getNextRandomWord()
+        self.sut.processUserAttempt(userAttempt: .correct, givenWord: wordPair2!)
+        let wordPair3 = self.sut.getNextRandomWord()
+        self.sut.processUserAttempt(userAttempt: .correct, givenWord: wordPair3!)
+
+        // Assert
+        func endGame(quitReason: WordAttemptsVM.EndGameReason) {
+            quitExpectaion.fulfill()
+        }
+        self.wait(for: [quitExpectaion], timeout: 0.1)
+    }
+
+    /// When total allowed attempts are made, the endGame closure should be called
+    func testEndingConditions_whenTotalAllowedAttemptsAreMade_endGameClosureShouldBeCalled() throws {
+        // Arrange
+        let wordList = Constants.getSpanishWords() ?? []
+        let correctProbability = 0.0
+        let totalAllowedAttempts = 15
+        self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability, allowedWrongAttempts: 3)
+        let quitExpectaion = expectation(description: "End game expectation")
+        self.sut.endGame = endGame(quitReason: )
+
+        // Act
+        for _ in 0..<totalAllowedAttempts {
+            let wordPair1 = self.sut.getNextRandomWord()
+            self.sut.processUserAttempt(userAttempt: .wrong, givenWord: wordPair1!)
+        }
+
+        // Assert
+        func endGame(quitReason: WordAttemptsVM.EndGameReason) {
+            quitExpectaion.fulfill()
+        }
+        self.wait(for: [quitExpectaion], timeout: 0.1)
+    }
+
+    /// When total attempts are not yet made, the game should not end
+    func testEndingConditions_whenTotalAllowedAttemptsAreNotYetMade_endGameClosureShouldNotBeCalled() throws {
+        // Arrange
+        let wordList = Constants.getSpanishWords() ?? []
+        let correctProbability = 0.0
+        let totalAllowedAttempts = 15
+        self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability, allowedWrongAttempts: 3)
+        self.sut.endGame = endGame(quitReason: )
+
+        // Act
+        for _ in 0..<totalAllowedAttempts-1 {
+            let wordPair1 = self.sut.getNextRandomWord()
+            self.sut.processUserAttempt(userAttempt: .wrong, givenWord: wordPair1!)
+        }
+        // Assert
+        func endGame(quitReason: WordAttemptsVM.EndGameReason) {
+            XCTFail("QuitGame closure should not be called")
+        }
     }
 }

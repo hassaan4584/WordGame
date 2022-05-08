@@ -27,7 +27,8 @@ class WordAttemptsVCTests: XCTestCase {
     func testInputProcessing_whenCorrectCTAIsTappedWithMatchingWord_shouldUpdateLabelsCorrectly() throws {
         let spanishWords = Constants.getSpanishWords() ?? []
         self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 1.0)
-            // Since VM is instantiated, we need to use getNextRandomWord function to show a word
+        self.sut.wordAttemptsVM.onAttemptMade = self.sut.updateAttemps(correctCount:wrongCount:)
+        // Since VM is instantiated, we need to use getNextRandomWord function to show a word
         _ = self.sut.wordAttemptsVM.getNextRandomWord()
         self.sut.correctButton.sendActions(for: .touchUpInside)
 
@@ -37,38 +38,88 @@ class WordAttemptsVCTests: XCTestCase {
 
     /// When translation of a word is wrong and user presses `Correct` CTA, wrong count should be increased
     func testInputProcessing_whenCorrectCTAIsTappedWithNonMatchingWord_shouldUpdateLabelsCorrectly() throws {
+        // Arrange
         let spanishWords = Constants.getSpanishWords() ?? []
         self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 0.0)
-            // Since VM is instantiated, we need to use getNextRandomWord function to show a word
+        self.sut.wordAttemptsVM.onAttemptMade = self.sut.updateAttemps(correctCount:wrongCount:)
+
+        // Act
+        // Since VM is instantiated, we need to use getNextRandomWord function to show a word
         _ = self.sut.wordAttemptsVM.getNextRandomWord()
         self.sut.correctButton.sendActions(for: .touchUpInside)
 
+        // Assert
         XCTAssertEqual(self.sut.correctAttemptsCountLabel.text!, "0")
         XCTAssertEqual(self.sut.wrongAttemptsCountLabel.text!, "1")
     }
 
     /// When the word and its translation are correct and user presses `Wrong` CTA, wrong count should be increased
     func testInputProcessing_whenWrongCTAIsTappedWithMatchingWord_shouldUpdateLabelsCorrectly() throws {
+        // Arrange
         let spanishWords = Constants.getSpanishWords() ?? []
         self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 1.0)
-            // Since VM is instantiated, we need to use getNextRandomWord function to show a word
+        self.sut.wordAttemptsVM.onAttemptMade = self.sut.updateAttemps(correctCount:wrongCount:)
+
+        // Act
+        // Since VM is instantiated, we need to use getNextRandomWord function to show a word
         _ = self.sut.wordAttemptsVM.getNextRandomWord()
         self.sut.wrongButton.sendActions(for: .touchUpInside)
 
+        // Assert
         XCTAssertEqual(self.sut.correctAttemptsCountLabel.text!, "0")
         XCTAssertEqual(self.sut.wrongAttemptsCountLabel.text!, "1")
     }
 
     /// When translation of a word is wrong and user presses `Wrong` CTA, correct count should be increased
     func testInputProcessing_whenWrongCTAIsTappedWithNonMatchingWord_shouldUpdateLabelsCorrectly() throws {
+        // Arrange
         let spanishWords = Constants.getSpanishWords() ?? []
         self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 0.0)
-            // Since VM is instantiated, we need to use getNextRandomWord function to show a word
+        self.sut.wordAttemptsVM.onAttemptMade = self.sut.updateAttemps(correctCount:wrongCount:)
+
+        // Act
+        // Since VM is instantiated, we need to use getNextRandomWord function to show a word
         _ = self.sut.wordAttemptsVM.getNextRandomWord()
         self.sut.wrongButton.sendActions(for: .touchUpInside)
 
+        // Assert
         XCTAssertEqual(self.sut.correctAttemptsCountLabel.text!, "1")
         XCTAssertEqual(self.sut.wrongAttemptsCountLabel.text!, "0")
+    }
+
+    /// When the closure is not set, the labels should not be updated.
+    func testInputProcessing_whenClosureIsNotSet_shouldNotUpdateLabels() throws {
+        // Arrange
+        let spanishWords = Constants.getSpanishWords() ?? []
+        self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 1.0)
+
+        // Act
+        _ = self.sut.wordAttemptsVM.getNextRandomWord()
+        self.sut.correctButton.sendActions(for: .touchUpInside)
+
+        // Assert
+        // When UI update closure is not set, the UI should not update
+        XCTAssertEqual(self.sut.correctAttemptsCountLabel.text!, "0")
+        XCTAssertEqual(self.sut.wrongAttemptsCountLabel.text!, "0")
+    }
+
+    /// Testing timer functionality that wrong attempt count increases when timeout occurs
+    func testTimer_whenTimerExpires_shouldUpdateWrongLabel() throws {
+        // Arrange
+        let spanishWords = Constants.getSpanishWords() ?? []
+        self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 1.0)
+        var isWrongAttemptIncreased: Bool = false
+        let exp = expectation(for: isWrongAttemptIncreased, description: "Attempt timeout expectation")
+        self.sut.wordAttemptsVM.onAttemptMade = { (_, wrongCount) in
+            isWrongAttemptIncreased = (wrongCount == 1)
+        }
+
+        // Act
+        _ = self.sut.wordAttemptsVM.getNextRandomWord()
+        self.sut.restartTimer()
+
+        // Assert
+        wait(for: [exp], timeout: 6)
     }
 
 }
