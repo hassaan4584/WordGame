@@ -17,6 +17,14 @@ final class WordAttemptsVM {
         case wrong
     }
 
+    /// Possible reasons why the game has to end
+    enum EndGameReason: Int {
+        /// When the number of wrong attempts are used
+        case wrongAttempts
+        /// When the total number of words for this round are attempted
+        case totalWords
+    }
+
     /// This contains the list of words, these words could be either Spanish or German or some other
     private let wordsList: [Word]
     /// The probability that a given word and its translation are correct
@@ -29,6 +37,15 @@ final class WordAttemptsVM {
     private var wrongAttemptsCount: Int = 0
     /// `WordPair` that is currently shown to user
     var currentWord: WordPair?
+    /// Maximum attempts allowed to the user OR the maximum number of words shown to the user
+    private var totalAllowedWordAttempts: Int { 15 }
+    /// Maximum wrong attempts allowed
+    private var allowedWrongAttempts: Int { 3 }
+
+    /// This will get called when the game has to end
+    var endGame: ((EndGameReason) -> Void)?
+    /// This will be used to update UI with `correct` and `wrong` attempt counts
+    var onAttemptMade: ((_ correctCount: Int, _ wrongCount: Int) -> Void)?
 
     init(spanishWordsList: [Word], correctAnswerProbability: Double=0.25) {
         self.wordsList = spanishWordsList
@@ -84,8 +101,8 @@ final class WordAttemptsVM {
     /// - Parameters:
     ///   - userAttempt: Representing the user action
     ///   - givenWord: The `WordPair` thats shown to the user
-    /// - Returns: A tuple with `correct` and `wrong` counts
-    func processUserAttempt(userAttempt: UserAttempt, givenWord: WordPair) -> (correctCount: Int, wrongCount: Int) {
+    /// - Returns: A tuple with `correct` and `wrong` attempt counts
+    func processUserAttempt(userAttempt: UserAttempt, givenWord: WordPair) {
         switch userAttempt {
         case .correct:
             if givenWord.isTranslationCorrect {
@@ -100,6 +117,24 @@ final class WordAttemptsVM {
                 self.correctAttemptsCount += 1
             }
         }
-        return (self.correctAttemptsCount, self.wrongAttemptsCount)
+        self.verifyGameEndingConditions()
+        self.onAttemptMade?(self.correctAttemptsCount, self.wrongAttemptsCount)
+    }
+
+    /// Processes timeout as wrong attempt
+    /// - Returns: A tuple with updated `correct` and `wrong` attempt counts
+    func processTimerExpiryAttempt() {
+        self.wrongAttemptsCount += 1
+        self.verifyGameEndingConditions()
+        self.onAttemptMade?(self.correctAttemptsCount, self.wrongAttemptsCount)
+    }
+
+    /// When game ending conditions are met, this will inform its VC to take respective
+    func verifyGameEndingConditions() {
+        if self.nextWordIndex == self.totalAllowedWordAttempts {
+            self.endGame?(.totalWords)
+        } else if self.wrongAttemptsCount == self.allowedWrongAttempts {
+            self.endGame?(.wrongAttempts)
+        }
     }
 }

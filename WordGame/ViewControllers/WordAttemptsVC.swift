@@ -19,7 +19,10 @@ class WordAttemptsVC: UIViewController {
 
     /// viewModel object associated with this WordAttemptsVC class
     var wordAttemptsVM: WordAttemptsVM!
-
+    /// The timer object to keep track of the time duration for each attempt
+    var attemptsTimer: Timer?
+    /// Time duration in seconds allowed to make an attempt
+    private var timerDuration: Double { 5.0 }
     // MARK: Initializations
 
     override func viewDidLoad() {
@@ -28,6 +31,7 @@ class WordAttemptsVC: UIViewController {
         self.setupViewModel()
         self.setupViews()
         self.showNextWord()
+        self.restartTimer()
     }
 
     /// Setting up different views
@@ -44,6 +48,9 @@ class WordAttemptsVC: UIViewController {
     func setupViewModel() {
         let spanishWordsList: [Word] = Constants.getSpanishWords() ?? []
         self.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWordsList, correctAnswerProbability: 0.25)
+        // Setting up closures
+        self.wordAttemptsVM.endGame = self.endGame(quitReason:)
+        self.wordAttemptsVM.onAttemptMade = self.updateAttemps(correctCount:wrongCount:)
     }
 
     // MARK: UI Updates
@@ -62,6 +69,18 @@ class WordAttemptsVC: UIViewController {
         self.englishWordLabel.text = word.englishWord
     }
 
+    // MARK: Timer
+    @objc func timerDidEnd() {
+        self.wordAttemptsVM.processTimerExpiryAttempt()
+        self.showNextWord()
+    }
+
+    /// When the timer had to end prematurely and we need to restart the timer
+    func restartTimer() {
+        self.attemptsTimer?.invalidate()
+        self.attemptsTimer = Timer.scheduledTimer(timeInterval: self.timerDuration, target: self, selector: #selector(timerDidEnd), userInfo: nil, repeats: true)
+    }
+
     // MARK: UserInteractions
 
     @IBAction func correctButtonPressed(_ sender: UIButton) {
@@ -69,9 +88,10 @@ class WordAttemptsVC: UIViewController {
             self.showNextWord()
             return
         }
-        let attempts = self.wordAttemptsVM.processUserAttempt(userAttempt: .correct, givenWord: currentWord)
-        self.updateAttemps(correctCount: attempts.correctCount, wrongCount: attempts.wrongCount)
+        self.wordAttemptsVM.processUserAttempt(userAttempt: .correct, givenWord: currentWord)
+        self.wordAttemptsVM.verifyGameEndingConditions()
         self.showNextWord()
+        self.restartTimer()
     }
 
     @IBAction func wrongButtonPressed(_ sender: UIButton) {
@@ -79,8 +99,16 @@ class WordAttemptsVC: UIViewController {
             self.showNextWord()
             return
         }
-        let attempts = self.wordAttemptsVM.processUserAttempt(userAttempt: .wrong, givenWord: currentWord)
-        self.updateAttemps(correctCount: attempts.correctCount, wrongCount: attempts.wrongCount)
+        self.wordAttemptsVM.processUserAttempt(userAttempt: .wrong, givenWord: currentWord)
+        self.wordAttemptsVM.verifyGameEndingConditions()
         self.showNextWord()
+        self.restartTimer()
+    }
+
+    // MARK: Game Logic
+    /// This is used to quit the app once the game has ended.
+    func endGame(quitReason: WordAttemptsVM.EndGameReason) {
+        let exitCode: Int32 = Int32(quitReason.rawValue)
+        exit(exitCode)
     }
 }

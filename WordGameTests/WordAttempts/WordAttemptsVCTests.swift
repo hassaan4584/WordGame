@@ -27,7 +27,8 @@ class WordAttemptsVCTests: XCTestCase {
     func testInputProcessing_whenCorrectCTAIsTappedWithMatchingWord_shouldUpdateLabelsCorrectly() throws {
         let spanishWords = Constants.getSpanishWords() ?? []
         self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 1.0)
-            // Since VM is instantiated, we need to use getNextRandomWord function to show a word
+        self.sut.wordAttemptsVM.onAttemptMade = self.sut.updateAttemps(correctCount:wrongCount:)
+        // Since VM is instantiated, we need to use getNextRandomWord function to show a word
         _ = self.sut.wordAttemptsVM.getNextRandomWord()
         self.sut.correctButton.sendActions(for: .touchUpInside)
 
@@ -39,7 +40,8 @@ class WordAttemptsVCTests: XCTestCase {
     func testInputProcessing_whenCorrectCTAIsTappedWithNonMatchingWord_shouldUpdateLabelsCorrectly() throws {
         let spanishWords = Constants.getSpanishWords() ?? []
         self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 0.0)
-            // Since VM is instantiated, we need to use getNextRandomWord function to show a word
+        self.sut.wordAttemptsVM.onAttemptMade = self.sut.updateAttemps(correctCount:wrongCount:)
+        // Since VM is instantiated, we need to use getNextRandomWord function to show a word
         _ = self.sut.wordAttemptsVM.getNextRandomWord()
         self.sut.correctButton.sendActions(for: .touchUpInside)
 
@@ -51,7 +53,8 @@ class WordAttemptsVCTests: XCTestCase {
     func testInputProcessing_whenWrongCTAIsTappedWithMatchingWord_shouldUpdateLabelsCorrectly() throws {
         let spanishWords = Constants.getSpanishWords() ?? []
         self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 1.0)
-            // Since VM is instantiated, we need to use getNextRandomWord function to show a word
+        self.sut.wordAttemptsVM.onAttemptMade = self.sut.updateAttemps(correctCount:wrongCount:)
+        // Since VM is instantiated, we need to use getNextRandomWord function to show a word
         _ = self.sut.wordAttemptsVM.getNextRandomWord()
         self.sut.wrongButton.sendActions(for: .touchUpInside)
 
@@ -63,7 +66,8 @@ class WordAttemptsVCTests: XCTestCase {
     func testInputProcessing_whenWrongCTAIsTappedWithNonMatchingWord_shouldUpdateLabelsCorrectly() throws {
         let spanishWords = Constants.getSpanishWords() ?? []
         self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 0.0)
-            // Since VM is instantiated, we need to use getNextRandomWord function to show a word
+        self.sut.wordAttemptsVM.onAttemptMade = self.sut.updateAttemps(correctCount:wrongCount:)
+        // Since VM is instantiated, we need to use getNextRandomWord function to show a word
         _ = self.sut.wordAttemptsVM.getNextRandomWord()
         self.sut.wrongButton.sendActions(for: .touchUpInside)
 
