@@ -13,9 +13,9 @@ class WordAttemptsVCTests: XCTestCase {
     var sut: WordAttemptsVC!
 
     override func setUpWithError() throws {
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let attemptsVC = storyboard.instantiateInitialViewController() as? WordAttemptsVC
-        self.sut = attemptsVC!
+        let spanishWords: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
+        let wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords)
+        self.sut = WordAttemptsVC.createWordAttemptsVC(wordAttemptsVM: wordAttemptsVM, timerDuration: 5.0)
         self.sut.loadView()
     }
 

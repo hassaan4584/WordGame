@@ -18,13 +18,33 @@ class WordAttemptsVC: UIViewController {
     @IBOutlet weak var wrongButton: UIButton!
 
     /// viewModel object associated with this WordAttemptsVC class
-    var wordAttemptsVM: WordAttemptsVM!
+    var wordAttemptsVM: WordAttemptsVM
     /// The timer object to keep track of the time duration for each attempt
     var attemptsTimer: Timer?
     /// Time duration in seconds allowed to make an attempt
-    var timerDuration: Double { 5.0 }
+    let timerDuration: Double
+    /// storyboard identifier
+    static let identifier = "WordAttemptsVC"
 
     // MARK: Initializations
+    /// 
+    static func createWordAttemptsVC(wordAttemptsVM: WordAttemptsVM, timerDuration: Double) -> WordAttemptsVC {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let wordAttemptsVC = storyboard.instantiateViewController(identifier: WordAttemptsVC.identifier) { aCoder in
+            WordAttemptsVC.init(wordAttemptsVM: wordAttemptsVM, timerDuration: timerDuration, coder: aCoder)
+        }
+        return wordAttemptsVC
+    }
+
+    init? (wordAttemptsVM: WordAttemptsVM, timerDuration: Double, coder: NSCoder) {
+        self.wordAttemptsVM = wordAttemptsVM
+        self.timerDuration = timerDuration
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,8 +71,6 @@ class WordAttemptsVC: UIViewController {
 
     /// Initialize view model object
     func setupViewModel() {
-        let spanishWordsList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
-        self.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWordsList, correctAnswerProbability: 0.25)
         // Setting up closures
         self.wordAttemptsVM.endGame = self.endGame(quitReason:)
         self.wordAttemptsVM.onAttemptMade = self.updateAttemps(correctCount:wrongCount:)
