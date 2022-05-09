@@ -18,6 +18,7 @@ struct SpanishWord: Decodable, Word {
         case textSpa = "text_spa"
     }
 
+    // Conformance to Word Protocol
     var englishWord: String? {
         return self.textEng
     }

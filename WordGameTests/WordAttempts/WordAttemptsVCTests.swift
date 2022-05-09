@@ -13,9 +13,9 @@ class WordAttemptsVCTests: XCTestCase {
     var sut: WordAttemptsVC!
 
     override func setUpWithError() throws {
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let attemptsVC = storyboard.instantiateInitialViewController() as? WordAttemptsVC
-        self.sut = attemptsVC!
+        let spanishWords: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
+        let wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords)
+        self.sut = WordAttemptsVC.createWordAttemptsVC(wordAttemptsVM: wordAttemptsVM, timerDuration: 5.0)
         self.sut.loadView()
     }
 
@@ -25,7 +25,7 @@ class WordAttemptsVCTests: XCTestCase {
 
     /// When the word and its translation are correct and user presses `Correct` CTA, correct count should be increased
     func testInputProcessing_whenCorrectCTAIsTappedWithMatchingWord_shouldUpdateLabelsCorrectly() throws {
-        let spanishWords = Constants.getSpanishWords() ?? []
+        let spanishWords: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 1.0)
         self.sut.wordAttemptsVM.onAttemptMade = self.sut.updateAttemps(correctCount:wrongCount:)
         // Since VM is instantiated, we need to use getNextRandomWord function to show a word
@@ -39,7 +39,7 @@ class WordAttemptsVCTests: XCTestCase {
     /// When translation of a word is wrong and user presses `Correct` CTA, wrong count should be increased
     func testInputProcessing_whenCorrectCTAIsTappedWithNonMatchingWord_shouldUpdateLabelsCorrectly() throws {
         // Arrange
-        let spanishWords = Constants.getSpanishWords() ?? []
+        let spanishWords: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 0.0)
         self.sut.wordAttemptsVM.onAttemptMade = self.sut.updateAttemps(correctCount:wrongCount:)
 
@@ -56,7 +56,7 @@ class WordAttemptsVCTests: XCTestCase {
     /// When the word and its translation are correct and user presses `Wrong` CTA, wrong count should be increased
     func testInputProcessing_whenWrongCTAIsTappedWithMatchingWord_shouldUpdateLabelsCorrectly() throws {
         // Arrange
-        let spanishWords = Constants.getSpanishWords() ?? []
+        let spanishWords: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 1.0)
         self.sut.wordAttemptsVM.onAttemptMade = self.sut.updateAttemps(correctCount:wrongCount:)
 
@@ -73,7 +73,7 @@ class WordAttemptsVCTests: XCTestCase {
     /// When translation of a word is wrong and user presses `Wrong` CTA, correct count should be increased
     func testInputProcessing_whenWrongCTAIsTappedWithNonMatchingWord_shouldUpdateLabelsCorrectly() throws {
         // Arrange
-        let spanishWords = Constants.getSpanishWords() ?? []
+        let spanishWords: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 0.0)
         self.sut.wordAttemptsVM.onAttemptMade = self.sut.updateAttemps(correctCount:wrongCount:)
 
@@ -90,7 +90,7 @@ class WordAttemptsVCTests: XCTestCase {
     /// When the closure is not set, the labels should not be updated.
     func testInputProcessing_whenClosureIsNotSet_shouldNotUpdateLabels() throws {
         // Arrange
-        let spanishWords = Constants.getSpanishWords() ?? []
+        let spanishWords: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 1.0)
 
         // Act
@@ -106,7 +106,7 @@ class WordAttemptsVCTests: XCTestCase {
     /// Testing timer functionality that wrong attempt count increases when timeout occurs
     func testTimer_whenTimerExpires_shouldUpdateWrongLabel() throws {
         // Arrange
-        let spanishWords = Constants.getSpanishWords() ?? []
+        let spanishWords: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 1.0)
         var isWrongAttemptIncreased: Bool = false
         let exp = expectation(for: isWrongAttemptIncreased, description: "Attempt timeout expectation")

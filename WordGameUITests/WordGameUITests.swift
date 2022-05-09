@@ -9,33 +9,42 @@ import XCTest
 
 class WordGameUITests: XCTestCase {
 
+    let app = XCUIApplication()
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
+        app.launchArguments = ["UITests"]
+        app.launch()
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+        app.terminate()
     }
 
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
+    /// When the app is launched, correct/wrong buttons should show up but not Restart/Quit buttons
+    func testAppLaunchState_whenAppIsLaunched_shouldShowAttemptButtons() throws {
+        // Arrange + Act
+        let correctButtonExists = app.buttons["Correct"]
+        let wrongButtonExists = app.buttons["Wrong"]
+        let quitButtonExists = app.buttons["Quit"]
+        let restartButtonExists = app.buttons["Restart"]
 
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        // Assert
+        XCTAssertTrue(correctButtonExists.exists)
+        XCTAssertTrue(wrongButtonExists.exists)
+        XCTAssertFalse(quitButtonExists.exists)
+        XCTAssertFalse(restartButtonExists.exists)
     }
 
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
+    /// When the timer expires, the app should show an alert with buttons and text
+    func testEndGameDialog_whenTimeoutHappes_DialogShouldAppear() throws {
+        XCTAssertTrue(app.buttons["Quit"].waitForExistence(timeout: 16.0))
+        XCTAssertTrue(app.buttons["Restart"].exists)
+        XCTAssertEqual(app.alerts.element.label, "Game End")
+        XCTAssert(app.alerts.element.staticTexts["Do you want to restart ?"].exists)
     }
+
 }
