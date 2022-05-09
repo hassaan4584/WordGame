@@ -6,7 +6,7 @@ game again or quit from the app.
 
 # App Architecture
 It uses simple _MVVM_ pattern with dependency initializer based dependency injection.
-There is only one Screen in the app. The app has test cases written for WordAttemptsViewController and WordAttemptsViewModel
+There is only one Screen in the app. The app has test cases written for WordAttemptsViewController and WordAttemptsViewModel. A few very simple UITests are also added.
 
 # Enhancements
 * We can use translations for a different language. This is already done from coding point, we just need to provide a separate json file.
@@ -18,7 +18,7 @@ There is only one Screen in the app. The app has test cases written for WordAtte
 * We can consider fetching the list of words from internet rather than just hardcooding in the application
 
 ## Time effort
-* The time effort put in is roughly between 6-8 hours
+* The time effort put in is roughly between 7-8 hours
 ### Time Distribution
 * Planning: The app is fairly simple, so it took ~10 mins
 * UI: Designing the UI roughly took 1 hour
@@ -26,10 +26,14 @@ There is only one Screen in the app. The app has test cases written for WordAtte
 * ViewModel: Creating and incrementally updating the ViewModel roughly took 2-3 hours
 * ViewController: Adding logic in ViewController and setting it up with ViewModel took 2-3 hours
 * Writing different TestCases for ViewController and ViewModel took ~2 hours
+* About 1 hour in final refactoring
 
 ### Decisions made
 * Should the _timer_ object be stored in a ViewController or ViewModel
 * Use _System Alert_ for popup rather than creating a separate custom popup screen
+* How do we want to inject dependencies to the initial view controller.
+* Should we use a separate file/class for handling the navigations, given that we currently have only one screen.
 
 ### Given more time
 * Given more time, we could add more meaningful UITestCases.
+* We could improve Overall TestCoverage
