@@ -51,7 +51,7 @@ class WordAttemptsVC: UIViewController {
 
     /// Initialize view model object
     func setupViewModel() {
-        let spanishWordsList: [Word] = Constants.getSpanishWords() ?? []
+        let spanishWordsList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         self.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWordsList, correctAnswerProbability: 0.25)
         // Setting up closures
         self.wordAttemptsVM.endGame = self.endGame(quitReason:)

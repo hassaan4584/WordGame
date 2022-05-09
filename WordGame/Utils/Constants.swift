@@ -8,10 +8,14 @@
 import Foundation
 
 struct Constants {
+    /// Filename for Spanish words
+    static var spanishWordsFileName: String { "SpanishWords" }
 
-    static func getSpanishWords() -> WordsList? {
-        guard let filePath = Bundle.main.url(forResource: "SpanishWords", withExtension: ".json"),
-              let data = try? Data(contentsOf: filePath), let wordsList = try? JSONDecoder().decode([SpanishWord].self, from: data) else {
+    /// Reads the list of words from the given filename and returns them in array
+    /// - Returns: the list of words
+    static func getWordList<T>(fileName: String) -> [T]? where T: Decodable {
+        guard let filePath = Bundle.main.url(forResource: fileName, withExtension: ".json"),
+              let data = try? Data(contentsOf: filePath), let wordsList = try? JSONDecoder().decode([T].self, from: data) else {
             return nil
         }
         return wordsList

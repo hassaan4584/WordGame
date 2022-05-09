@@ -49,11 +49,7 @@ class WordAttemptsVMTests: XCTestCase {
     /// When the probability of Correct is 1, all answers should be the correct WordPair
     func testGenerateRandomChoice_whenCorrectProbabilityIs1_shouldAlwaysReturnCorrectAnswer() throws {
         // Arrange
-        guard let wordList = Constants.getSpanishWords() else {
-            XCTFail("Unable to get words List")
-            return
-        }
-
+        let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 1.0
         self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
 
@@ -72,11 +68,7 @@ class WordAttemptsVMTests: XCTestCase {
     /// When the probability of Correct is 1, all answers should be the correct False
     func testGenerateRandomChoice_whenCorrectProbabilityIs0_shouldAlwaysReturnWrongAnswer() throws {
         // Arrange
-        guard let wordList = Constants.getSpanishWords() else {
-            XCTFail("Unable to get words List")
-            return
-        }
-
+        let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
         self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
 
@@ -96,11 +88,7 @@ class WordAttemptsVMTests: XCTestCase {
     /// When the index would become out of range for generating random Choice
     func testGenerateRandomChoice_whenCorrectProbabilityIs0ForLastIndex_shouldAlwaysReturnWrongAnswer() throws {
         // Arrange
-        guard let wordList = Constants.getSpanishWords() else {
-            XCTFail("Unable to get words List")
-            return
-        }
-
+        let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
         self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
         let spanishWord = wordList[296]
@@ -118,11 +106,7 @@ class WordAttemptsVMTests: XCTestCase {
     /// When word list is empty, it should return the passed pair
     func testGenerateRandomChoice_whenCorrectProbabilityIs0ForEmptyList_shouldAlwaysOriginalPair() throws {
         // Arrange
-        guard let wordList = Constants.getSpanishWords() else {
-            XCTFail("Unable to get words List")
-            return
-        }
-
+        let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
         self.sut = WordAttemptsVM(spanishWordsList: [], correctAnswerProbability: correctProbability)
         let spanishWord = wordList[296]
@@ -138,11 +122,7 @@ class WordAttemptsVMTests: XCTestCase {
 
     func testGetNextRandomWord_whenItsVeryFirstIteration_FirstItemShouldBeReturned() throws {
         // Arrange
-        guard let wordList = Constants.getSpanishWords() else {
-            XCTFail("Unable to get words List")
-            return
-        }
-
+        let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 1.0
         self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
 
@@ -160,11 +140,7 @@ class WordAttemptsVMTests: XCTestCase {
     /// When the list contains 1 item and the correct probability is 0, the item returned should still be correct
     func testGetNextRandomWord_whenListContainsOnly1Item_ItShouldReturnCorrectPair() throws {
         // Arrange
-        guard let wordList = Constants.getSpanishWords() else {
-            XCTFail("Unable to get words List")
-            return
-        }
-
+        let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
         self.sut = WordAttemptsVM(spanishWordsList: [wordList[0]], correctAnswerProbability: correctProbability)
 
@@ -182,11 +158,7 @@ class WordAttemptsVMTests: XCTestCase {
     /// When the list contains 2 items and the correct probability is 0, the item returned should still be correct
     func testGetNextRandomWord_whenListContains2Items_ItShouldReturnCorrectPair() throws {
         // Arrange
-        guard let wordList = Constants.getSpanishWords() else {
-            XCTFail("Unable to get words List")
-            return
-        }
-
+        let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
         self.sut = WordAttemptsVM(spanishWordsList: [wordList[0], wordList[1]], correctAnswerProbability: correctProbability)
 
@@ -204,11 +176,7 @@ class WordAttemptsVMTests: XCTestCase {
     /// When the pair is matching AND user presses the `Correct` CTA. The attempt will be considered as correct
     func testProcessUserAttempt_whenItsVeryFirstIteration_userMakesCorrectAttemptWithMatchingTranslation() throws {
         // Arrange
-        guard let wordList = Constants.getSpanishWords() else {
-            XCTFail("Unable to get words List")
-            return
-        }
-
+        let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 1.0
         self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
         var correct = 0, wrong = 0
@@ -229,11 +197,7 @@ class WordAttemptsVMTests: XCTestCase {
     /// When the pair is matching AND user presses the `Wrong` CTA. The attempt will be considered as wrong
     func testProcessUserAttempt_whenItsVeryFirstIteration_userMakesCorrectAttemptWithWrongTranslation() throws {
         // Arrange
-        guard let wordList = Constants.getSpanishWords() else {
-            XCTFail("Unable to get words List")
-            return
-        }
-
+        let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 1.0
         self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
         var correct = 0, wrong = 0
@@ -253,11 +217,7 @@ class WordAttemptsVMTests: XCTestCase {
     /// When the pair is not matching AND user presses the `Correct` CTA. The attempt will be considered as wrong
     func testProcessUserAttempt_whenItsVeryFirstIteration_userMakesWrongAttemptWithMatchingTranslation() throws {
         // Arrange
-        guard let wordList = Constants.getSpanishWords() else {
-            XCTFail("Unable to get words List")
-            return
-        }
-
+        let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
         self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
         var correct = 0, wrong = 0
@@ -278,11 +238,7 @@ class WordAttemptsVMTests: XCTestCase {
     /// When the pair is not matching AND user presses the `wrong` CTA. The attempt will be considered as correct
     func testProcessUserAttempt_whenItsVeryFirstIteration_userMakesWrongAttemptWithWrongTranslation() throws {
         // Arrange
-        guard let wordList = Constants.getSpanishWords() else {
-            XCTFail("Unable to get words List")
-            return
-        }
-
+        let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
         self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
         var correct = 0, wrong = 0
@@ -303,7 +259,7 @@ class WordAttemptsVMTests: XCTestCase {
     /// When user performs 3 wrong attempts, the endGame closure should be called
     func testEndingConditions_whenUserMakes3WrongAttempts_endGameClosureShouldBeCalled() throws {
         // Arrange
-        let wordList = Constants.getSpanishWords() ?? []
+        let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
         self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability, allowedWrongAttempts: 3)
         let quitExpectaion = expectation(description: "End game expectation")
@@ -328,7 +284,7 @@ class WordAttemptsVMTests: XCTestCase {
     /// When total allowed attempts are made, the endGame closure should be called
     func testEndingConditions_whenTotalAllowedAttemptsAreMade_endGameClosureShouldBeCalled() throws {
         // Arrange
-        let wordList = Constants.getSpanishWords() ?? []
+        let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
         let totalAllowedAttempts = 15
         self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability, allowedWrongAttempts: 3)
@@ -352,7 +308,7 @@ class WordAttemptsVMTests: XCTestCase {
     /// When total attempts are not yet made, the game should not end
     func testEndingConditions_whenTotalAllowedAttemptsAreNotYetMade_endGameClosureShouldNotBeCalled() throws {
         // Arrange
-        let wordList = Constants.getSpanishWords() ?? []
+        let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
         let totalAllowedAttempts = 15
         self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability, allowedWrongAttempts: 3)
