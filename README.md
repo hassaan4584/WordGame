@@ -5,8 +5,10 @@ both match or not. If player makes _15_ total attempts or _3_ wrong attempts, th
 game again or quit from the app.
 
 # App Architecture
-It uses simple _MVVM_ pattern with dependency initializer based dependency injection.
-There is only one Screen in the app. The app has test cases written for WordAttemptsViewController and WordAttemptsViewModel. A few very simple UITests are also added.
+* It uses simple _MVVM_ pattern with initializer based dependency injection.
+* There is only one Screen in the app. The app has test cases written for WordAttemptsViewController and WordAttemptsViewModel. 
+* There are very simple UITests also added.
+* SwiftLint is used to standardize coding style.
 
 # Enhancements
 * We can use translations for a different language. This is already done from coding point, we just need to provide a separate json file.
