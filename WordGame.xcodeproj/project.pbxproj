@@ -121,7 +121,6 @@
 				1A7F964D28265A6B00B57F0C /* Data */,
 				1A7F964C28265A2800B57F0C /* Models */,
 				1A7F964B28265A2000B57F0C /* ViewModels */,
-				1A7F964A28265A1600B57F0C /* Extensions */,
 				1A7F964928265A0600B57F0C /* ViewControllers */,
 				1A7F9648282659FB00B57F0C /* Storyboards */,
 				1A7F9618282651A100B57F0C /* AppDelegate.swift */,
@@ -166,13 +165,6 @@
 				1A7F961C282651A100B57F0C /* WordAttemptsVC.swift */,
 			);
 			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		1A7F964A28265A1600B57F0C /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		1A7F964B28265A2000B57F0C /* ViewModels */ = {
