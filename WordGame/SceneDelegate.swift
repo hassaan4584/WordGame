@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow()
         window?.windowScene = scene as? UIWindowScene
         let spanishWords: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
-        let wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 0.25)
+        let wordAttemptsVM = WordAttemptsVM(wordsList: spanishWords, correctAnswerProbability: 0.25)
         window?.rootViewController = WordAttemptsVC.createWordAttemptsVC(wordAttemptsVM: wordAttemptsVM, timerDuration: 5.0)
         window?.makeKeyAndVisible()
 

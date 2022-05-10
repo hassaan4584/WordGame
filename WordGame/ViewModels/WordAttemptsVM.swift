@@ -17,14 +17,6 @@ final class WordAttemptsVM {
         case wrong
     }
 
-    /// Possible reasons why the game has to end
-    enum EndGameReason: Int {
-        /// When the number of wrong attempts are used
-        case wrongAttempts
-        /// When the total number of words for this round are attempted
-        case totalWords
-    }
-
     /// This contains the list of words, these words could be either Spanish or German or some other
     private let wordsList: [Word]
     /// The probability that a given word and its translation are correct
@@ -43,12 +35,12 @@ final class WordAttemptsVM {
     var currentWord: WordPair?
 
     /// This will get called when the game has to end
-    var endGame: ((EndGameReason) -> Void)?
+    var onGameEnd: (() -> Void)?
     /// This will be used to update UI with `correct` and `wrong` attempt counts
     var onAttemptMade: ((_ correctCount: Int, _ wrongCount: Int) -> Void)?
 
-    init(spanishWordsList: [Word], correctAnswerProbability: Double=0.25, totalAllowedWordAttempts: Int=15, allowedWrongAttempts: Int=3) {
-        self.wordsList = spanishWordsList
+    init(wordsList: [Word], correctAnswerProbability: Double=0.25, totalAllowedWordAttempts: Int=15, allowedWrongAttempts: Int=3) {
+        self.wordsList = wordsList
         self.correctAnswerProbability = correctAnswerProbability
         self.totalAllowedWordAttempts = totalAllowedWordAttempts
         self.allowedWrongAttempts = allowedWrongAttempts
@@ -65,20 +57,20 @@ final class WordAttemptsVM {
 
     /// Creates a `WordPair`  that may or may not have correct translation.
     /// - Parameters:
-    ///   - spanishWord: The `spanishWord.textEng` is the english word for which its correct or wrong translation is to be shown
+    ///   - word: The word whose meaning is to be shown. The meaning may or may not be correct
     ///   - wordsList: The list of words from which some incorrect word will be used
     /// - Returns: if no error happens, it will return `WordPair` object
     func generateRandomWordPair(word: Word, wordsList: WordsList) -> WordPair? {
-        guard let englishWord = word.englishWord, let spanishWord = word.translatedWord else {
+        guard let englishWord = word.englishWord, let translatedWord = word.translatedWord else {
             return nil
         }
         guard !shouldUseCorrectOption(probability: self.correctAnswerProbability) else {
-            return WordPair(englishWord: englishWord, translatedWord: spanishWord, isTranslationCorrect: true)
+            return WordPair(englishWord: englishWord, translatedWord: translatedWord, isTranslationCorrect: true)
         }
         guard wordsList.count > 2 else {
-            return WordPair(englishWord: englishWord, translatedWord: spanishWord, isTranslationCorrect: true)
+            return WordPair(englishWord: englishWord, translatedWord: translatedWord, isTranslationCorrect: true)
         }
-        guard let wordIndex = (wordsList.firstIndex { $0.englishWord == englishWord && $0.translatedWord == spanishWord }) else { return nil }
+        guard let wordIndex = (wordsList.firstIndex { $0.englishWord == englishWord && $0.translatedWord == translatedWord }) else { return nil }
 
         let nextIndex: Int = (wordIndex + 2) % wordsList.count
         guard let randomTranslation = wordsList[nextIndex].translatedWord else { return nil }
@@ -93,17 +85,16 @@ final class WordAttemptsVM {
         guard self.nextWordIndex < self.wordsList.count else { return nil }
         guard self.wordsList.count > 0 else { return nil }
 
-        let spanishWord = self.wordsList[self.nextWordIndex]
+        let languageWord = self.wordsList[self.nextWordIndex]
         self.nextWordIndex = (self.nextWordIndex + 1) % self.wordsList.count
-        self.currentWord = self.generateRandomWordPair(word: spanishWord, wordsList: self.wordsList)
+        self.currentWord = self.generateRandomWordPair(word: languageWord, wordsList: self.wordsList)
         return self.currentWord
     }
 
-    /// Processes the given input  by the user and return attempts count
+    /// Processes the given input  by the user
     /// - Parameters:
     ///   - userAttempt: Representing the user action
     ///   - givenWord: The `WordPair` thats shown to the user
-    /// - Returns: A tuple with `correct` and `wrong` attempt counts
     func processUserAttempt(userAttempt: UserAttempt, givenWord: WordPair) {
         switch userAttempt {
         case .correct:
@@ -123,7 +114,6 @@ final class WordAttemptsVM {
     }
 
     /// Processes timeout as wrong attempt
-    /// - Returns: A tuple with updated `correct` and `wrong` attempt counts
     func processTimerExpiryAttempt() {
         self.wrongAttemptsCount += 1
         self.onAttemptMade?(self.correctAttemptsCount, self.wrongAttemptsCount)
@@ -135,13 +125,13 @@ final class WordAttemptsVM {
         self.onAttemptMade?(self.correctAttemptsCount, self.wrongAttemptsCount)
     }
     /// When game ending conditions are met, this will inform its VC to take respective
-    /// - Returns: Boolean depending on if the endGame action has to be taken or not
+    /// - Returns: Boolean depending on if the onGameEnd action has to be taken or not
     func verifyGameEndingConditions() -> Bool {
         if (correctAttemptsCount + wrongAttemptsCount) == self.totalAllowedWordAttempts {
-            self.endGame?(.totalWords)
+            self.onGameEnd?()
             return true
         } else if self.wrongAttemptsCount == self.allowedWrongAttempts {
-            self.endGame?(.wrongAttempts)
+            self.onGameEnd?()
             return true
         }
         return false

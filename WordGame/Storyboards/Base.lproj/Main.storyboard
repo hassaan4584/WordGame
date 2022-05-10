@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -13,11 +12,11 @@
             <objects>
                 <viewController storyboardIdentifier="WordAttemptsVC" id="BYZ-38-t0r" customClass="WordAttemptsVC" customModule="WordGame" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EnglishWord" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLd-gp-N50">
-                                <rect key="frame" x="138" y="483" width="138.5" height="30"/>
+                                <rect key="frame" x="231" y="335" width="138.5" height="30"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -30,7 +29,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d5I-bL-t82" userLabel="Attempts View">
-                                <rect key="frame" x="222" y="54" width="172" height="57"/>
+                                <rect key="frame" x="408" y="10" width="172" height="57"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Correct attempts:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h46-oJ-uKs">
                                         <rect key="frame" x="5" y="0.0" width="142" height="21"/>
@@ -85,10 +84,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bi0-KJ-Bag" userLabel="BottomButtonsView">
-                                <rect key="frame" x="0.0" y="782" width="414" height="80"/>
+                                <rect key="frame" x="0.0" y="520" width="600" height="80"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KiQ-4d-OuI">
-                                        <rect key="frame" x="56.5" y="10" width="140" height="50"/>
+                                        <rect key="frame" x="86.5" y="10" width="203" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Rg0-Ym-TlQ"/>
                                         </constraints>
@@ -102,7 +101,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pks-II-5JT">
-                                        <rect key="frame" x="217.5" y="10" width="140" height="50"/>
+                                        <rect key="frame" x="310.5" y="10" width="203" height="50"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Wrong">
@@ -113,7 +112,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uh8-a2-Hkb" userLabel="separatorView">
-                                        <rect key="frame" x="206.5" y="0.0" width="1" height="80"/>
+                                        <rect key="frame" x="299.5" y="0.0" width="1" height="80"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="n9B-Ri-fv2"/>
@@ -154,7 +153,7 @@
                         <outlet property="correctAttemptsCountLabel" destination="i7P-Wr-Utu" id="Ykn-Rd-P8S"/>
                         <outlet property="correctButton" destination="KiQ-4d-OuI" id="wvN-h7-eCf"/>
                         <outlet property="englishWordLabel" destination="YLd-gp-N50" id="fS9-mO-Q5N"/>
-                        <outlet property="spanishWordLabel" destination="cpm-tx-QoJ" id="8hQ-9k-VHT"/>
+                        <outlet property="translatedWordLabel" destination="cpm-tx-QoJ" id="8hQ-9k-VHT"/>
                         <outlet property="wrongAttemptsCountLabel" destination="oqT-jH-ha4" id="8zc-wr-6rX"/>
                         <outlet property="wrongButton" destination="pks-II-5JT" id="UI6-Ld-HsQ"/>
                     </connections>

@@ -11,7 +11,7 @@ class WordAttemptsVC: UIViewController {
 
     @IBOutlet weak var correctAttemptsCountLabel: UILabel!
     @IBOutlet weak var wrongAttemptsCountLabel: UILabel!
-    @IBOutlet weak var spanishWordLabel: UILabel!
+    @IBOutlet weak var translatedWordLabel: UILabel!
 
     @IBOutlet weak var englishWordLabel: UILabel!
     @IBOutlet weak var correctButton: UIButton!
@@ -27,7 +27,7 @@ class WordAttemptsVC: UIViewController {
     static let identifier = "WordAttemptsVC"
 
     // MARK: Initializations
-    /// 
+    /// creates an instance of WordAttemptsVC class with given data
     static func createWordAttemptsVC(wordAttemptsVM: WordAttemptsVM, timerDuration: Double) -> WordAttemptsVC {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let wordAttemptsVC = storyboard.instantiateViewController(identifier: WordAttemptsVC.identifier) { aCoder in
@@ -64,15 +64,15 @@ class WordAttemptsVC: UIViewController {
         self.correctButton.layer.cornerRadius = 2.0
         self.correctButton.layer.borderWidth = 3.0
 
-        self.spanishWordLabel.frame = .init(x: 0, y: 0, width: self.view.frame.width, height: 100)
-        self.spanishWordLabel.center = .init(x: self.view.center.x, y: 50)
-        spanishWordLabel.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.5)
+        self.translatedWordLabel.frame = .init(x: 0, y: 0, width: self.view.frame.width, height: 100)
+        self.translatedWordLabel.center = .init(x: self.view.center.x, y: 50)
+        translatedWordLabel.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.5)
     }
 
     /// Initialize view model object
     func setupViewModel() {
         // Setting up closures
-        self.wordAttemptsVM.endGame = self.endGame(quitReason:)
+        self.wordAttemptsVM.onGameEnd = self.endGame
         self.wordAttemptsVM.onAttemptMade = self.updateAttemps(correctCount:wrongCount:)
     }
 
@@ -87,15 +87,15 @@ class WordAttemptsVC: UIViewController {
     /// Fetches the next word and displays it on the screen
     func showNextWordWithAnimation() {
         guard let word = self.wordAttemptsVM.getNextRandomWord() else { return }
-        self.spanishWordLabel.layer.removeAllAnimations()
+        self.translatedWordLabel.layer.removeAllAnimations()
         // Starting at the top
-        self.spanishWordLabel.center = .init(x: self.view.center.x, y: 50)
+        self.translatedWordLabel.center = .init(x: self.view.center.x, y: 50)
         // Animating to the bottom
         UIView.animate(withDuration: self.timerDuration, delay: 0, options: .curveLinear) {
-            self.spanishWordLabel.center = .init(x: self.view.center.x, y: self.view.frame.height-150)
+            self.translatedWordLabel.center = .init(x: self.view.center.x, y: self.view.frame.height-150)
         }
 
-        self.spanishWordLabel.text = word.translatedWord
+        self.translatedWordLabel.text = word.translatedWord
         self.englishWordLabel.text = word.englishWord
     }
 
@@ -147,11 +147,12 @@ class WordAttemptsVC: UIViewController {
 
     // MARK: Game Logic
     /// This is used to quit the app once the game has ended.
-    func endGame(quitReason: WordAttemptsVM.EndGameReason) {
+    func endGame() {
         self.showAlertForRestart()
     }
 
     // MARK: Navigations
+    /// Shows the Game End dialog with options to `Restart` or `Quit`
     func showAlertForRestart() {
         let alert = UIAlertController(title: "Game End", message: "Do you want to restart ?", preferredStyle: .alert)
         let restartAction = UIAlertAction(title: "Restart", style: .default) { [weak self] _ in

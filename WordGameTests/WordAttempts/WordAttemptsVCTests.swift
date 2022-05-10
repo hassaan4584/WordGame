@@ -14,7 +14,7 @@ class WordAttemptsVCTests: XCTestCase {
 
     override func setUpWithError() throws {
         let spanishWords: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
-        let wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords)
+        let wordAttemptsVM = WordAttemptsVM(wordsList: spanishWords)
         self.sut = WordAttemptsVC.createWordAttemptsVC(wordAttemptsVM: wordAttemptsVM, timerDuration: 5.0)
         self.sut.loadView()
     }
@@ -26,7 +26,7 @@ class WordAttemptsVCTests: XCTestCase {
     /// When the word and its translation are correct and user presses `Correct` CTA, correct count should be increased
     func testInputProcessing_whenCorrectCTAIsTappedWithMatchingWord_shouldUpdateLabelsCorrectly() throws {
         let spanishWords: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
-        self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 1.0)
+        self.sut.wordAttemptsVM = WordAttemptsVM(wordsList: spanishWords, correctAnswerProbability: 1.0)
         self.sut.wordAttemptsVM.onAttemptMade = self.sut.updateAttemps(correctCount:wrongCount:)
         // Since VM is instantiated, we need to use getNextRandomWord function to show a word
         _ = self.sut.wordAttemptsVM.getNextRandomWord()
@@ -40,7 +40,7 @@ class WordAttemptsVCTests: XCTestCase {
     func testInputProcessing_whenCorrectCTAIsTappedWithNonMatchingWord_shouldUpdateLabelsCorrectly() throws {
         // Arrange
         let spanishWords: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
-        self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 0.0)
+        self.sut.wordAttemptsVM = WordAttemptsVM(wordsList: spanishWords, correctAnswerProbability: 0.0)
         self.sut.wordAttemptsVM.onAttemptMade = self.sut.updateAttemps(correctCount:wrongCount:)
 
         // Act
@@ -57,7 +57,7 @@ class WordAttemptsVCTests: XCTestCase {
     func testInputProcessing_whenWrongCTAIsTappedWithMatchingWord_shouldUpdateLabelsCorrectly() throws {
         // Arrange
         let spanishWords: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
-        self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 1.0)
+        self.sut.wordAttemptsVM = WordAttemptsVM(wordsList: spanishWords, correctAnswerProbability: 1.0)
         self.sut.wordAttemptsVM.onAttemptMade = self.sut.updateAttemps(correctCount:wrongCount:)
 
         // Act
@@ -74,7 +74,7 @@ class WordAttemptsVCTests: XCTestCase {
     func testInputProcessing_whenWrongCTAIsTappedWithNonMatchingWord_shouldUpdateLabelsCorrectly() throws {
         // Arrange
         let spanishWords: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
-        self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 0.0)
+        self.sut.wordAttemptsVM = WordAttemptsVM(wordsList: spanishWords, correctAnswerProbability: 0.0)
         self.sut.wordAttemptsVM.onAttemptMade = self.sut.updateAttemps(correctCount:wrongCount:)
 
         // Act
@@ -91,7 +91,7 @@ class WordAttemptsVCTests: XCTestCase {
     func testInputProcessing_whenClosureIsNotSet_shouldNotUpdateLabels() throws {
         // Arrange
         let spanishWords: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
-        self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 1.0)
+        self.sut.wordAttemptsVM = WordAttemptsVM(wordsList: spanishWords, correctAnswerProbability: 1.0)
 
         // Act
         _ = self.sut.wordAttemptsVM.getNextRandomWord()
@@ -107,7 +107,7 @@ class WordAttemptsVCTests: XCTestCase {
     func testTimer_whenTimerExpires_shouldUpdateWrongLabel() throws {
         // Arrange
         let spanishWords: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
-        self.sut.wordAttemptsVM = WordAttemptsVM(spanishWordsList: spanishWords, correctAnswerProbability: 1.0)
+        self.sut.wordAttemptsVM = WordAttemptsVM(wordsList: spanishWords, correctAnswerProbability: 1.0)
         var isWrongAttemptIncreased: Bool = false
         let exp = expectation(for: isWrongAttemptIncreased, description: "Attempt timeout expectation")
         self.sut.wordAttemptsVM.onAttemptMade = { (_, wrongCount) in

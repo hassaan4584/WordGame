@@ -22,7 +22,7 @@ class WordAttemptsVMTests: XCTestCase {
     func testRandomFunction_whenCorrectProbabilityIs1_shouldAlwaysReturnTrue() throws {
         // Arrange
         let correctProbability = 1.0
-        self.sut = WordAttemptsVM(spanishWordsList: [], correctAnswerProbability: correctProbability)
+        self.sut = WordAttemptsVM(wordsList: [], correctAnswerProbability: correctProbability)
 
         // Act
         for _ in 0..<10 {
@@ -36,7 +36,7 @@ class WordAttemptsVMTests: XCTestCase {
     func testRandomFunction_whenCorrectProbabilityIs0_shouldAlwaysReturnFalse() throws {
         // Arrange
         let correctProbability = 0.0
-        self.sut = WordAttemptsVM(spanishWordsList: [], correctAnswerProbability: correctProbability)
+        self.sut = WordAttemptsVM(wordsList: [], correctAnswerProbability: correctProbability)
 
         // Act
         for _ in 0..<10 {
@@ -51,7 +51,7 @@ class WordAttemptsVMTests: XCTestCase {
         // Arrange
         let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 1.0
-        self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
+        self.sut = WordAttemptsVM(wordsList: wordList, correctAnswerProbability: correctProbability)
 
         for i in 0..<wordList.count {
             // Act
@@ -70,7 +70,7 @@ class WordAttemptsVMTests: XCTestCase {
         // Arrange
         let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
-        self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
+        self.sut = WordAttemptsVM(wordsList: wordList, correctAnswerProbability: correctProbability)
 
         for i in 0..<wordList.count {
             // Act
@@ -90,7 +90,7 @@ class WordAttemptsVMTests: XCTestCase {
         // Arrange
         let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
-        self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
+        self.sut = WordAttemptsVM(wordsList: wordList, correctAnswerProbability: correctProbability)
         let spanishWord = wordList[296]
 
         // Act
@@ -108,7 +108,7 @@ class WordAttemptsVMTests: XCTestCase {
         // Arrange
         let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
-        self.sut = WordAttemptsVM(spanishWordsList: [], correctAnswerProbability: correctProbability)
+        self.sut = WordAttemptsVM(wordsList: [], correctAnswerProbability: correctProbability)
         let spanishWord = wordList[296]
 
         // Act
@@ -124,7 +124,7 @@ class WordAttemptsVMTests: XCTestCase {
         // Arrange
         let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 1.0
-        self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
+        self.sut = WordAttemptsVM(wordsList: wordList, correctAnswerProbability: correctProbability)
 
         // Act
         let spanishWord = wordList[0] // Function should return first element of list
@@ -142,7 +142,7 @@ class WordAttemptsVMTests: XCTestCase {
         // Arrange
         let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
-        self.sut = WordAttemptsVM(spanishWordsList: [wordList[0]], correctAnswerProbability: correctProbability)
+        self.sut = WordAttemptsVM(wordsList: [wordList[0]], correctAnswerProbability: correctProbability)
 
         // Act
         let spanishWord = wordList[0] // Function should return first element of list
@@ -160,7 +160,7 @@ class WordAttemptsVMTests: XCTestCase {
         // Arrange
         let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
-        self.sut = WordAttemptsVM(spanishWordsList: [wordList[0], wordList[1]], correctAnswerProbability: correctProbability)
+        self.sut = WordAttemptsVM(wordsList: [wordList[0], wordList[1]], correctAnswerProbability: correctProbability)
 
         // Act
         let spanishWord = wordList[0] // Function should return first element of list
@@ -178,7 +178,7 @@ class WordAttemptsVMTests: XCTestCase {
         // Arrange
         let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 1.0
-        self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
+        self.sut = WordAttemptsVM(wordsList: wordList, correctAnswerProbability: correctProbability)
         var correct = 0, wrong = 0
         self.sut.onAttemptMade = { (correctCount, wrongCount) in
             correct = correctCount
@@ -199,7 +199,7 @@ class WordAttemptsVMTests: XCTestCase {
         // Arrange
         let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 1.0
-        self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
+        self.sut = WordAttemptsVM(wordsList: wordList, correctAnswerProbability: correctProbability)
         var correct = 0, wrong = 0
         self.sut.onAttemptMade = { (correctCount, wrongCount) in
             correct = correctCount
@@ -219,7 +219,7 @@ class WordAttemptsVMTests: XCTestCase {
         // Arrange
         let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
-        self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
+        self.sut = WordAttemptsVM(wordsList: wordList, correctAnswerProbability: correctProbability)
         var correct = 0, wrong = 0
         self.sut.onAttemptMade = { (correctCount, wrongCount) in
             correct = correctCount
@@ -240,7 +240,7 @@ class WordAttemptsVMTests: XCTestCase {
         // Arrange
         let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
-        self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability)
+        self.sut = WordAttemptsVM(wordsList: wordList, correctAnswerProbability: correctProbability)
         var correct = 0, wrong = 0
         self.sut.onAttemptMade = { (correctCount, wrongCount) in
             correct = correctCount
@@ -261,9 +261,9 @@ class WordAttemptsVMTests: XCTestCase {
         // Arrange
         let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
-        self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability, allowedWrongAttempts: 3)
+        self.sut = WordAttemptsVM(wordsList: wordList, correctAnswerProbability: correctProbability, allowedWrongAttempts: 3)
         let quitExpectaion = expectation(description: "End game expectation")
-        self.sut.endGame = endGame(quitReason: )
+        self.sut.onGameEnd = endGame
 
         // Act
         let wordPair1 = self.sut.getNextRandomWord()
@@ -275,7 +275,7 @@ class WordAttemptsVMTests: XCTestCase {
 
         _ = self.sut.verifyGameEndingConditions()
         // Assert
-        func endGame(quitReason: WordAttemptsVM.EndGameReason) {
+        func endGame() {
             quitExpectaion.fulfill()
         }
         self.wait(for: [quitExpectaion], timeout: 0.1)
@@ -287,9 +287,9 @@ class WordAttemptsVMTests: XCTestCase {
         let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
         let totalAllowedAttempts = 15
-        self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability, allowedWrongAttempts: 3)
+        self.sut = WordAttemptsVM(wordsList: wordList, correctAnswerProbability: correctProbability, allowedWrongAttempts: 3)
         let quitExpectaion = expectation(description: "End game expectation")
-        self.sut.endGame = endGame(quitReason: )
+        self.sut.onGameEnd = endGame
 
         // Act
         for _ in 0..<totalAllowedAttempts {
@@ -299,7 +299,7 @@ class WordAttemptsVMTests: XCTestCase {
         }
 
         // Assert
-        func endGame(quitReason: WordAttemptsVM.EndGameReason) {
+        func endGame() {
             quitExpectaion.fulfill()
         }
         self.wait(for: [quitExpectaion], timeout: 0.1)
@@ -311,8 +311,8 @@ class WordAttemptsVMTests: XCTestCase {
         let wordList: [SpanishWord] = Constants.getWordList(fileName: Constants.spanishWordsFileName) ?? []
         let correctProbability = 0.0
         let totalAllowedAttempts = 15
-        self.sut = WordAttemptsVM(spanishWordsList: wordList, correctAnswerProbability: correctProbability, allowedWrongAttempts: 3)
-        self.sut.endGame = endGame(quitReason: )
+        self.sut = WordAttemptsVM(wordsList: wordList, correctAnswerProbability: correctProbability, allowedWrongAttempts: 3)
+        self.sut.onGameEnd = endGame
 
         // Act
         for _ in 0..<totalAllowedAttempts-1 {
@@ -321,7 +321,7 @@ class WordAttemptsVMTests: XCTestCase {
             _ = self.sut.verifyGameEndingConditions()
         }
         // Assert
-        func endGame(quitReason: WordAttemptsVM.EndGameReason) {
+        func endGame() {
             XCTFail("QuitGame closure should not be called")
         }
     }
