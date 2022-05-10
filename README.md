@@ -38,4 +38,5 @@ game again or quit from the app.
 
 ### Given more time
 * Given more time, we could add more meaningful UITestCases.
-* We could improve Overall TestCoverage
+* We could improve Overall TestCoverage.
+* We can also set the basis for Coordinator Pattern to accommodate UI navigations later on.
